@@ -1,6 +1,5 @@
 import React from 'react';
 import { Repository } from '../../../../types/repository';
-import { mlService } from '../../../../services/mlAnalysisService';
 import '../../../../styles/components/reports.css';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
@@ -72,24 +71,6 @@ export const EnhancedRepositoryReport: React.FC<EnhancedRepositoryReportProps> =
 
   return (
     <div className="enhanced-repository-report">
-      <div className="report-header">
-        <h2>Enhanced Analysis Report: {repository.name}</h2>
-        <div className="report-metadata">
-          <span className="report-date">Generated on {new Date().toLocaleDateString()}</span>
-          <span className="report-version">v1.0</span>
-        </div>
-      </div>
-      
-      <div className="report-summary">
-        <h3>Repository Overview</h3>
-        <p>
-          {repository.name} is a {repository.language || 'multi-language'} repository with 
-          {repository.stargazers_count} stars and {repository.forks_count} forks.
-          This report provides an AI-assisted analysis of code patterns, community engagement,
-          and development practices.
-        </p>
-      </div>
-      
       <div className="report-sections">
         <div className="report-section">
           <h3>Code Quality Assessment</h3>

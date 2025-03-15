@@ -6,11 +6,10 @@ import { Repository } from './types/repository';
 import { RepositoryList } from './features/repositories/components/RepositoryList';
 import { RepositoryDetails } from './features/repositories/components/RepositoryDetails';
 import { RepositoryComparison } from './features/repositories/components/RepositoryComparison';
-import { MLComplianceControls } from './features/ml-analysis/components/MLComplianceControls';
-import { MLModelInfo } from './features/ml-analysis/components/MLModelInfo';
-import { MLInsightsBlog } from './features/ml-analysis/components/MLInsightsBlog';
 import { EnhancedRepositoryReport } from './features/reports/components/EnhancedRepositoryReport';
 import useDarkMode from './hooks/useDarkMode';
+import CacheResetButton from './components/CacheResetButton';
+import CacheDiagnostics from './components/CacheDiagnostics';
 
 function App() {
   const [darkMode, toggleDarkMode] = useDarkMode();
@@ -20,6 +19,23 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showReport, setShowReport] = useState(false);
+  const [showDiagnostics, setShowDiagnostics] = useState(false);
+
+  useEffect(() => {
+    // Add a keydown handler to show diagnostics with Ctrl+Shift+D
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check for Ctrl+Shift+D key combination
+      if (event.ctrlKey && event.shiftKey && event.key === 'D') {
+        setShowDiagnostics(prev => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +70,8 @@ function App() {
 
   return (
     <div className="app">
+      {showDiagnostics && <CacheDiagnostics />}
+      
       <header className="app-header">
         <div className="container">
           <h1>GitHub Repository Analyzer</h1>
@@ -107,19 +125,7 @@ function App() {
             <section className="details-section">
               <RepositoryDetails 
                 repository={selectedRepository}
-                onAnalyzeClick={handleGenerateReport}
-              />
-              
-              <MLComplianceControls />
-              
-              <MLModelInfo 
-                modelVersion="v1.2.3"
-                lastUpdated={new Date(2023, 5, 15)}
-                confidenceLevel={95}
-              />
-              
-              <MLInsightsBlog 
-                repositoryName={selectedRepository.name}
+                onShowReport={handleGenerateReport}
               />
             </section>
           )}
@@ -160,6 +166,8 @@ function App() {
           <p>© {new Date().getFullYear()} - All rights reserved</p>
         </div>
       </footer>
+      
+      <CacheResetButton />
     </div>
   );
 }

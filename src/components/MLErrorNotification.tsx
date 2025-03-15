@@ -1,60 +1,27 @@
 import React from 'react';
 
 interface MLErrorNotificationProps {
-  error: {
-    type: 'rate-limit' | 'api-error' | 'model-error' | 'data-error';
-    message: string;
-    timestamp: Date;
-    requestId?: string;
-  };
-  onDismiss: () => void;
+  message: string;
+  onDismiss?: () => void;
   onRetry?: () => void;
 }
 
 const MLErrorNotification: React.FC<MLErrorNotificationProps> = ({
-  error,
+  message,
   onDismiss,
   onRetry
 }) => {
-  // Determine error icon and color based on type
-  let icon = '⚠️';
-  let colorClass = 'warning';
-  
-  switch (error.type) {
-    case 'rate-limit':
-      icon = '⏱️';
-      colorClass = 'rate-limit';
-      break;
-    case 'api-error':
-      icon = '🔌';
-      colorClass = 'api';
-      break;
-    case 'model-error':
-      icon = '🤖';
-      colorClass = 'model';
-      break;
-    case 'data-error':
-      icon = '📊';
-      colorClass = 'data';
-      break;
-  }
-  
   return (
-    <div className={`ml-error-notification ${colorClass}`}>
-      <div className="error-icon">{icon}</div>
+    <div className="ml-error-notification warning">
+      <div className="error-icon">⚠️</div>
       
       <div className="error-content">
         <h4>ML Analysis Error</h4>
-        <p>{error.message}</p>
+        <p>{message}</p>
         <div className="error-meta">
           <span className="timestamp">
-            {error.timestamp.toLocaleTimeString()}
+            {new Date().toLocaleTimeString()}
           </span>
-          {error.requestId && (
-            <span className="request-id">
-              Request ID: {error.requestId}
-            </span>
-          )}
         </div>
       </div>
       
@@ -64,9 +31,11 @@ const MLErrorNotification: React.FC<MLErrorNotificationProps> = ({
             Retry
           </button>
         )}
-        <button className="dismiss-button" onClick={onDismiss}>
-          Dismiss
-        </button>
+        {onDismiss && (
+          <button className="dismiss-button" onClick={onDismiss}>
+            Dismiss
+          </button>
+        )}
       </div>
     </div>
   );

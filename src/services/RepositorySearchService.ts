@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { mlService } from './mlAnalysisService';
+import { mlAnalysisService } from './mlAnalysisService';
 import { cachingService } from './cachingService';
 
 export class RepositorySearchService {
@@ -162,7 +162,7 @@ export class RepositorySearchService {
   
   private async enhanceWithML(repositories: any[]): Promise<any[]> {
     // Get ML predictions for all repositories
-    const predictions = await mlService.generateInsights(repositories);
+    const predictions = await mlAnalysisService.generateInsights(repositories);
     
     // Combine predictions with repository data
     return repositories.map((repo, i) => ({
