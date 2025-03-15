@@ -1,0 +1,64 @@
+/* Temporarily hide comparison-related elements */
+.comparison-container,
+.comparison-toggle,
+.repository-compare-checkbox,
+.compare-button,
+.comparison-results,
+.repository-comparison,
+[class*="repository-comparison"] {
+  display: none !important;
+}
+
+/* Base styles for mobile first approach */
+.repository-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.repository-card {
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* Tablet styles */
+@media screen and (min-width: 768px) {
+  .search-container {
+    flex-direction: row;
+  }
+  
+  .search-input {
+    flex-grow: 1;
+  }
+  
+  .search-button {
+    width: auto;
+  }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 1024px) {
+  .repository-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Large desktop styles */
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+} 

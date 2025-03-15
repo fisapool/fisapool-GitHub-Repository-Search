@@ -1,0 +1,95 @@
+/* Theme colors and dark mode toggles */
+:root {
+  --primary-color: #0366d6;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.dark-mode {
+  --primary-color: #58a6ff;
+  --secondary-color: #8b949e;
+  --success-color: #56d364;
+  --danger-color: #f85149;
+  --warning-color: #e3b341;
+  --info-color: #38b2ac;
+  --light-color: #2d333b;
+  --dark-color: #0d1117;
+  
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.7);
+  --shadow-md: 0 3px 6px rgba(0,0,0,0.6), 0 3px 6px rgba(0,0,0,0.8);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.7), 0 6px 6px rgba(0,0,0,0.8);
+}
+
+/* Button styles */
+.primary-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.primary-button:hover {
+  background-color: #0550a0;
+}
+
+.primary-button:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
+}
+
+.dark-mode .primary-button:hover {
+  background-color: #337acc;
+}
+
+/* Secondary button */
+.secondary-button {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.secondary-button:hover {
+  background-color: rgba(3, 102, 214, 0.1);
+}
+
+.dark-mode .secondary-button {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.dark-mode .secondary-button:hover {
+  background-color: rgba(88, 166, 255, 0.1);
+} 
