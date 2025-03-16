@@ -2,11 +2,9 @@ name: "CodeQL"
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
   schedule:
     - cron: '0 0 * * *'
 
@@ -17,40 +15,32 @@ jobs:
     permissions:
       security-events: write
       actions: read
-
     strategy:
       fail-fast: false
       matrix:
         language: ['javascript']
-
     steps:
-      - uses: actions/checkout@v3
-        name: Checkout repository
-        id: checkout
-
-      - uses: github/codeql-action/init@v2
-        name: Initialize the CodeQL tools
-        id: init-codeql
-        with:
-          languages: ${{ matrix.language }}
-
-      - uses: actions/setup-node@v3
-        name: Setup Node.js
-        id: setup-node
-        with:
-          node-version: '16'
-          cache: 'npm'
-
-      - run: npm ci
-        name: Install dependencies
-        id: install
-
-      - run: npm run build --if-present
-        name: Build
-        id: build
-        env:
-          CI: false
-
-      - uses: github/codeql-action/analyze@v2
-        name: Perform CodeQL Analysis
-        id: analyze 
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'npm'
+      
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build
+      run: npm run build --if-present
+      env:
+        CI: false
+      
+    - name: Analyze
+      uses: github/codeql-action/analyze@v2 
