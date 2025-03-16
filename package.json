@@ -1,7 +1,7 @@
 {
   "name": "github-repository-search-ui",
   "version": "0.1.0",
-  "homepage": "https://fisapool.github.io/GitHub-Repository-Search-UI-with-ML-analysis",
+  "homepage": "https://fisapool.github.io/GitHub-Repository-Search",
   "private": true,
   "dependencies": {
     "@tensorflow/tfjs": "^4.22.0",

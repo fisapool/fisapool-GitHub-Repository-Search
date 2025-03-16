@@ -1,6 +1,6 @@
-# GitHub Repository Search UI with ML Analysis
+# GitHub Repository Search
 
-This application provides an enhanced GitHub repository search experience with machine learning-powered insights and recommendations.
+An interactive UI for searching GitHub repositories with machine learning-powered analysis.
 
 ## Features
 - **Advanced GitHub Repository Search**: Filter by language, stars, and other criteria
