@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { mlService } from '../services/mlAnalysisService';
+import { mlAnalysisService } from '../services/mlAnalysisService';
+import { Repository } from '../types/repository';
+import { MLPrediction } from '../services/mlAnalysisService';
 
 interface MLAnalysisLoaderProps {
-  repositories: any[];
-  onAnalysisComplete: (results: any[]) => void;
-  onAnalysisError: (error: Error) => void;
+  repositories: Repository[];
+  onAnalysisComplete: (results: MLPrediction[]) => void;
+  onAnalysisError: (error: string) => void;
 }
 
 const MLAnalysisLoader: React.FC<MLAnalysisLoaderProps> = ({
@@ -21,6 +23,9 @@ const MLAnalysisLoader: React.FC<MLAnalysisLoaderProps> = ({
     const loadAnalysis = async () => {
       if (!repositories || repositories.length === 0) return;
       
+      console.log('MLAnalysisLoader: Starting analysis with service:', mlAnalysisService);
+      console.log('MLAnalysisLoader: Repositories:', repositories);
+      
       setLoading(true);
       setProgress(10);
       
@@ -31,7 +36,9 @@ const MLAnalysisLoader: React.FC<MLAnalysisLoaderProps> = ({
         }, 500);
         
         // Get predictions from ML service
-        const predictions = await mlService.generateInsights(repositories);
+        console.log('MLAnalysisLoader: Calling mlAnalysisService.analyze()');
+        const predictions = await mlAnalysisService.analyze(repositories);
+        console.log('MLAnalysisLoader: Analysis complete, predictions:', predictions);
         
         clearInterval(progressInterval);
         
@@ -42,7 +49,7 @@ const MLAnalysisLoader: React.FC<MLAnalysisLoaderProps> = ({
       } catch (error) {
         if (isMounted) {
           console.error('Error in ML analysis:', error);
-          onAnalysisError(error instanceof Error ? error : new Error('Unknown error in analysis'));
+          onAnalysisError(error instanceof Error ? error.message : 'Unknown error in analysis');
         }
       } finally {
         if (isMounted) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Repository } from './RepositoryList';
-import { mlService, MLPrediction } from '../services/mlAnalysisService';
+import { mlAnalysisService, MLPrediction } from '../services/mlAnalysisService';
 import SafeMLVisualization from './SafeMLVisualization';
 import QuantifiableRecommendationsView, { Recommendation } from './QuantifiableRecommendationsView';
 import MLComplianceControls from './MLComplianceControls';
@@ -239,7 +239,7 @@ const RepositoryComparison: React.FC<RepositoryComparisonProps> = ({ repositorie
       setWorkflowStage(ComparisonWorkflowStage.GENERATE_VISUALIZATIONS);
       
       // Generate ML visualizations
-      const predictions = await mlService.generateInsights(results);
+      const predictions = await mlAnalysisService.generateInsights(results);
       setMlPredictions(predictions);
       
       setWorkflowStage(ComparisonWorkflowStage.DISPLAY_RESULTS);
@@ -1213,7 +1213,7 @@ const RepositoryComparison: React.FC<RepositoryComparisonProps> = ({ repositorie
   const confirmClearMLData = () => {
     if (window.confirm("Are you sure you want to clear all ML analysis data? This action cannot be undone.")) {
       // Clear any stored ML data
-      mlService.clearAllStoredData();
+      mlAnalysisService.clearAllStoredData();
       
       // Show confirmation
       alert("All ML analysis data has been cleared successfully.");

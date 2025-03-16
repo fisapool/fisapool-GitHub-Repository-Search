@@ -2,43 +2,39 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  build-and-test:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup CMake
-        uses: lukka/get-cmake@latest
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '6.5.0'
-          host: 'windows'
-          target: 'desktop'
-
-      - name: Install vcpkg dependencies
-        run: |
-          vcpkg install boost:x64-windows
-
-      - name: Configure CMake
-        run: |
-          cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build
-        run: |
-          cmake --build build --config Release
-
-      - name: Run tests
-        run: |
-          cd build
-          ctest -C Release --output-on-failure 
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'npm'
+      
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run linting
+      run: npm run lint
+      
+    - name: Run type checking
+      run: npm run typecheck
+      
+    - name: Run tests
+      run: npm test -- --watchAll=false
+      
+    - name: Build
+      run: npm run build
+      env:
+        CI: false
+        REACT_APP_GITHUB_API_URL: 'https://api.github.com'
+        REACT_APP_ENV: 'production'
+        REACT_APP_RATE_LIMIT_THRESHOLD: '20' 

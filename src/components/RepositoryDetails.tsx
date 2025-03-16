@@ -1,69 +1,126 @@
-import React, { useState } from 'react';
-import { Repository } from './RepositoryList';
-import DetailedActionPlan from './DetailedActionPlan';
-import { mlService } from '../services/mlAnalysisService';
+import React from 'react';
+import { Repository } from '../types/repository';
 
-interface RepositoryDetailsProps extends Repository {
-  onError?: (error: { type: string; message: string; details: string }) => void;
+interface RepositoryDetailsProps {
+  repository: Repository;
 }
 
-const RepositoryDetails: React.FC<RepositoryDetailsProps> = (props) => {
-  const [actionPlan, setActionPlan] = useState<any>(null);
-  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
-  const { onError } = props;
-
-  const handleGenerateActionPlan = async () => {
-    setIsGeneratingPlan(true);
-    try {
-      const plan = await mlService.generateDetailedActionPlan(props);
-      setActionPlan(plan);
-    } catch (error) {
-      console.error('Error generating action plan:', error);
-      // Show error notification
-      if (onError) {
-        onError({
-          type: 'model',
-          message: 'Failed to generate action plan',
-          details: error instanceof Error ? error.message : 'Unknown error'
-        });
-      }
-    } finally {
-      setIsGeneratingPlan(false);
-    }
+const RepositoryDetails: React.FC<RepositoryDetailsProps> = ({
+  repository
+}) => {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
   return (
     <div className="repository-details">
-      <h2>{props.name}</h2>
-      <p>{props.description}</p>
-      <div className="repository-stats">
-        <div>
-          <strong>Owner:</strong> {props.owner.login}
-          <img src={props.owner.avatar_url} alt={`${props.owner.login}'s avatar`} width="50" />
+      <div className="repository-header">
+        <div className="repository-title">
+          <h2>{repository.name}</h2>
+          <span className="repository-fullname">{repository.full_name}</span>
         </div>
-        <div>
-          <strong>Stars:</strong> {props.stargazers_count}
-        </div>
-        <div>
-          <strong>Forks:</strong> {props.forks_count}
+        
+        <div className="repository-stats">
+          <div className="stat-item">
+            <span className="stat-icon">⭐</span>
+            <span className="stat-value">{repository.stargazers_count}</span>
+            <span className="stat-label">Stars</span>
+          </div>
+          
+          <div className="stat-item">
+            <span className="stat-icon">🍴</span>
+            <span className="stat-value">{repository.forks_count}</span>
+            <span className="stat-label">Forks</span>
+          </div>
+          
+          <div className="stat-item">
+            <span className="stat-icon">👁️</span>
+            <span className="stat-value">{repository.watchers_count}</span>
+            <span className="stat-label">Watchers</span>
+          </div>
+          
+          <div className="stat-item">
+            <span className="stat-icon">⚠️</span>
+            <span className="stat-value">{repository.open_issues_count}</span>
+            <span className="stat-label">Issues</span>
+          </div>
         </div>
       </div>
-      <a href={props.html_url} target="_blank" rel="noopener noreferrer">
-        View on GitHub
-      </a>
-      <button 
-        className="action-button"
-        onClick={handleGenerateActionPlan}
-        disabled={isGeneratingPlan}
-      >
-        {isGeneratingPlan ? 'Generating Plan...' : 'Generate Detailed Action Plan'}
-      </button>
-      {actionPlan && (
-        <div className="repository-action-plan">
-          <DetailedActionPlan 
-            actionPlan={actionPlan}
-            repositoryName={props.name}
-          />
+      
+      <div className="repository-description">
+        {repository.description ? (
+          <p>{repository.description}</p>
+        ) : (
+          <p className="no-description">No description provided</p>
+        )}
+      </div>
+      
+      <div className="repository-meta">
+        <div className="meta-item">
+          <span className="meta-label">Primary Language:</span>
+          <span className="meta-value">{repository.language || 'Not specified'}</span>
+        </div>
+        
+        <div className="meta-item">
+          <span className="meta-label">Created:</span>
+          <span className="meta-value">{formatDate(repository.created_at)}</span>
+        </div>
+        
+        <div className="meta-item">
+          <span className="meta-label">Last Updated:</span>
+          <span className="meta-value">{formatDate(repository.updated_at)}</span>
+        </div>
+        
+        <div className="meta-item">
+          <span className="meta-label">Default Branch:</span>
+          <span className="meta-value">{repository.default_branch}</span>
+        </div>
+      </div>
+      
+      <div className="repository-links">
+        <a 
+          href={repository.html_url} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="repo-link primary-link"
+        >
+          View on GitHub
+        </a>
+        
+        {repository.homepage && (
+          <a 
+            href={repository.homepage} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="repo-link homepage-link"
+          >
+            Project Homepage
+          </a>
+        )}
+      </div>
+      
+      {repository.topics && repository.topics.length > 0 && (
+        <div className="repository-topics">
+          <h3>Topics</h3>
+          <div className="topics-list">
+            {repository.topics.map((topic, index) => (
+              <span key={index} className="topic-tag">
+                {topic}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {repository.license && (
+        <div className="repository-license">
+          <h3>License</h3>
+          <p>{repository.license.name}</p>
         </div>
       )}
     </div>

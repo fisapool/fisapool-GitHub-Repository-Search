@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { mlService, MLPrediction } from '../services/mlAnalysisService';
+import { mlAnalysisService, MLPrediction } from '../services/mlAnalysisService';
 
 interface SafeMLVisualizationProps {
   repositoryAnalyses: any[];

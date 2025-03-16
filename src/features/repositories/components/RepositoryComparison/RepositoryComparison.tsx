@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Repository } from '../../../../types/repository';
-import { mlService } from '../../../../services/mlAnalysisService';
 import '../../../../styles/components/repository.css';
 
 interface RepositoryComparisonProps {

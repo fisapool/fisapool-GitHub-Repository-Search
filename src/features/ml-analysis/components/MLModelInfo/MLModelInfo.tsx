@@ -1,5 +1,5 @@
 import React from 'react';
-import { mlService } from '../../../../services/mlAnalysisService';
+import { mlAnalysisService } from '../../../../services/mlAnalysisService';
 import '../../../../styles/components/analysis.css';
 
 interface MLModelInfoProps {
@@ -13,7 +13,7 @@ export const MLModelInfo: React.FC<MLModelInfoProps> = ({
   lastUpdated,
   confidenceLevel
 }) => {
-  const isModelReady = mlService.isModelReady?.() || false;
+  const isModelReady = mlAnalysisService.isModelReady?.() || false;
   
   return (
     <div className="ml-model-info">
