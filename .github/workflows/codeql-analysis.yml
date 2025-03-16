@@ -24,33 +24,33 @@ jobs:
         language: ['javascript']
 
     steps:
-      - id: checkout
+      - uses: actions/checkout@v3
         name: Checkout repository
-        uses: actions/checkout@v3
+        id: checkout
 
-      - id: init-codeql
+      - uses: github/codeql-action/init@v2
         name: Initialize the CodeQL tools
-        uses: github/codeql-action/init@v2
+        id: init-codeql
         with:
           languages: ${{ matrix.language }}
 
-      - id: setup-node
+      - uses: actions/setup-node@v3
         name: Setup Node.js
-        uses: actions/setup-node@v3
+        id: setup-node
         with:
           node-version: '16'
           cache: 'npm'
 
-      - id: install
+      - run: npm ci
         name: Install dependencies
-        run: npm ci
+        id: install
 
-      - id: build
+      - run: npm run build --if-present
         name: Build
-        run: npm run build --if-present
+        id: build
         env:
           CI: false
 
-      - id: analyze
+      - uses: github/codeql-action/analyze@v2
         name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2 
+        id: analyze 
