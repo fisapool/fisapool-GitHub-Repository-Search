@@ -11,30 +11,36 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - id: checkout
+        uses: actions/checkout@v3
         name: Checkout code
 
-      - uses: actions/setup-node@v3
+      - id: setup-node
+        uses: actions/setup-node@v3
         name: Setup Node.js
         with:
           node-version: '16'
           cache: 'npm'
 
-      - name: Install dependencies
+      - id: install
+        name: Install dependencies
         run: npm ci
 
-      - name: Run linting
+      - id: lint
+        name: Run linting
         run: npm run lint
 
-      - name: Run type checking
+      - id: typecheck
+        name: Run type checking
         run: npm run typecheck
 
-      - name: Run tests
+      - id: test
+        name: Run tests
         run: npm test -- --watchAll=false
 
-      - name: Build
+      - id: build
+        name: Build
         run: npm run build
         env:
           CI: false
