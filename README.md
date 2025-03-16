@@ -56,6 +56,13 @@ An interactive UI for searching GitHub repositories with machine learning-powere
    ```
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
+## Screenshots
+
+![Screenshot 1](https://github.com/fisapool/fisapool-GitHub-Repository-Search/blob/main/img%20(3).png)
+![Screenshot 2](https://github.com/fisapool/fisapool-GitHub-Repository-Search/blob/main/img%20(2).png)
+![Screenshot 3](https://github.com/fisapool/fisapool-GitHub-Repository-Search/blob/main/img%20(1).png)
+![Screenshot 4](https://github.com/fisapool/fisapool-GitHub-Repository-Search/blob/main/img%20(4).png)
+
 ## ML Capabilities
 
 ### Repository Quality Analysis
