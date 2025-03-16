@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/fisapool-GitHub-Repository-Search/static/css/main.e51084bf.css",
+    "main.js": "/fisapool-GitHub-Repository-Search/static/js/main.36500380.js",
+    "index.html": "/fisapool-GitHub-Repository-Search/index.html",
+    "main.e51084bf.css.map": "/fisapool-GitHub-Repository-Search/static/css/main.e51084bf.css.map",
+    "main.36500380.js.map": "/fisapool-GitHub-Repository-Search/static/js/main.36500380.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e51084bf.css",
+    "static/js/main.36500380.js"
+  ]
+}
