@@ -10,31 +10,31 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '16'
-        cache: 'npm'
-      
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Run linting
-      run: npm run lint
-      
-    - name: Run type checking
-      run: npm run typecheck
-      
-    - name: Run tests
-      run: npm test -- --watchAll=false
-      
-    - name: Build
-      run: npm run build
-      env:
-        CI: false
-        REACT_APP_GITHUB_API_URL: 'https://api.github.com'
-        REACT_APP_ENV: 'production'
-        REACT_APP_RATE_LIMIT_THRESHOLD: '20' 
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'  # Change this if necessary
+          cache: 'npm'
+        
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run linting
+        run: npm run lint
+        
+      - name: Run type checking
+        run: npm run typecheck
+        
+      - name: Run tests
+        run: npm test -- --watchAll=false
+        
+      - name: Build
+        run: npm run build
+        env:
+          CI: true  # Set CI to true for build step
+          REACT_APP_GITHUB_API_URL: 'https://api.github.com'
+          REACT_APP_ENV: 'production'
+          REACT_APP_RATE_LIMIT_THRESHOLD: '20'
