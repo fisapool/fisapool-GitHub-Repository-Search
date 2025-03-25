@@ -31,3 +31,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Calculate CI/CD Value
+        run: |
+          mkdir -p config
+          cp config/sample_ci_cd_metrics.yaml config/ci_cd_metrics.yaml
+          python src/ci_cd_value.py
+        continue-on-error: true
+
+      - name: Upload Value Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: ci-cd-value
+          path: |
+            ci_cd_value_report.json
+            ci_cd_value_plot.png
