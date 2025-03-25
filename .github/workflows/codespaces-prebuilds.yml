@@ -31,7 +31,7 @@ jobs:
           context: .
           file: .devcontainer/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:codespaces-prebuild
+          tags: ghcr.io/${{ github.repository_owner | toLower }} /${{ github.event.repository.name | toLower }}:codespaces-prebuild  # Convert to lowercase
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
         env:
